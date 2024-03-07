@@ -68,6 +68,7 @@
         </v-col>
         <v-col cols="12">
           <v-btn type="submit" color="primary">Register</v-btn>
+          <v-btn class="ml-2" @click="redirectToLogin">Cancel</v-btn>
         </v-col>
       </v-row>
     </v-form>
@@ -95,10 +96,8 @@ export default {
   },
   methods: {
     register() {
-      // Add logic to send formData to the server for registration
-      console.log("Registration Data:", this.formData);
-      // Assuming you have a server API to handle registration
-      // You can use a library like axios to make an HTTP request to your server
+      // console.log("Registration Data:", this.formData);
+
       axios
         .post("http://localhost:3000/register", this.formData)
         .then((res) => {
@@ -107,6 +106,10 @@ export default {
         .catch((error) => {
           console.error("Registration failed:", error);
         });
+    },
+
+    redirectToLogin() {
+      this.$router.push("/login");
     },
   },
 };

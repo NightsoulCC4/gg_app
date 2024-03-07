@@ -1,28 +1,48 @@
 <template>
   <v-form @submit.prevent="login">
-    <v-text-field v-model="username" label="Username" required></v-text-field>
     <v-text-field
-      v-model="password"
+      v-model="formData.username"
+      label="Username"
+      required
+    ></v-text-field>
+    <v-text-field
+      v-model="formData.password"
       label="Password"
       type="password"
       required
     ></v-text-field>
     <v-btn type="submit" color="primary">Login</v-btn>
+    <v-btn class="ml-2" @click="redirectToRegister">Register</v-btn>
   </v-form>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
-      username: "",
-      password: "",
+      formData: {
+        username: "",
+        password: "",
+      },
     };
   },
   methods: {
     login() {
-      // Implement login logic (e.g., send data to server)
-      console.log("Login:", this.username, this.password);
+      console.log("Login:", this.formData);
+
+      axios
+        .post("http://localhost:3000/login", this.formData)
+        .then((res) => {
+          console.log("Registration successful:", res.data);
+          this.$router.push("/main");
+        })
+        .catch((error) => {
+          console.error("Registration failed:", error);
+        });
+    },
+    redirectToRegister() {
+      this.$router.push("/register");
     },
   },
 };
