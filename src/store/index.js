@@ -15,23 +15,23 @@ export default createStore({
     getters: {
     },
     mutations: {
-        login(state, value) {
-
-            console.log(value)
-
-            state.username = value.username
-            state.password = value.password
-            state.firstname = value.firstname
-            state.lastname = value.lastname
-            state.tel = value.tel
-            state.address = value.address
-            state.address_2 = value.address_2
-            state.bank_no = value.bank_no
-            state.bank_type = value.bank_type
+        login(state, data) {
+            state.username = data?.username
+            state.password = data?.password
+            state.firstname = data?.userData?.user_info[0]?.firstname
+            state.lastname = data?.userData?.user_info[0]?.lastname
+            state.tel = data?.userData?.user_info[0]?.tel
+            state.address = data?.userData?.user_info[0]?.address
+            state.address_2 = data?.userData?.user_info[0]?.address_2
+            state.bank_no = data?.userData?.bank_account[0]?.bank_no
+            state.bank_type = data?.userData?.bank_name[0]?.description
         }
     },
     actions: {
         saveLogin(context, data) {
+
+            console.log(data)
+
             context.commit('login', data)
         }
     },

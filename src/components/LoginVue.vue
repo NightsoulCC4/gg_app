@@ -36,7 +36,13 @@ export default {
         .then((res) => {
           console.log("login successful:", res.data);
 
-          this.$store.dispatch("saveLogin", res.data);
+          const data = {
+            userData: res.data.data,
+            username: this.formData.username,
+            password: this.formData.password,
+          };
+
+          this.$store.dispatch("saveLogin", data);
 
           this.$router.push("/main");
         })
