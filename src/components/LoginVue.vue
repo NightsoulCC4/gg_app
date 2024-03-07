@@ -34,7 +34,10 @@ export default {
       axios
         .post("http://localhost:3000/login", this.formData)
         .then((res) => {
-          console.log("Registration successful:", res.data);
+          console.log("login successful:", res.data);
+
+          this.$store.dispatch("saveLogin", res.data);
+
           this.$router.push("/main");
         })
         .catch((error) => {

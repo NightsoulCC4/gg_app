@@ -1,5 +1,5 @@
 <template>
-  <v-card> Home </v-card>
+  <div id="app">Home {{ $store.state.username }}</div>
 </template>
 
 <script>
