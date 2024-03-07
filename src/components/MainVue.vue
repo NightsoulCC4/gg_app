@@ -28,7 +28,9 @@
   </v-card>
   <div class="mt-5">
     <v-btn color="red" @click="dialogDisposit = true">Disposit</v-btn>
-    <v-btn class="ml-2" color="primary" @click="withdraw"> Withdraw </v-btn>
+    <v-btn class="ml-2" color="primary" @click="dialogWithdraw = true">
+      Withdraw
+    </v-btn>
 
     <br />
 
@@ -39,18 +41,23 @@
     <v-card>
       <template v-slot:actions>
         <v-text-field v-model="add_credit" type="text" required></v-text-field>
-        <v-btn
-          class="ms-auto"
-          text="Ok"
-          @click="disposit(add_credit), (dialogDisposit = false)"
-        ></v-btn>
+        <v-btn class="ms-auto" text="Ok" @click="disposit(add_credit)"></v-btn>
+      </template>
+    </v-card>
+  </v-dialog>
+
+  <v-dialog v-model="dialogWithdraw" width="auto">
+    <v-card>
+      <template v-slot:actions>
+        <v-text-field v-model="add_credit" type="text" required></v-text-field>
+        <v-btn class="ms-auto" text="Ok" @click="withdraw(add_credit)"></v-btn>
       </template>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   data() {
@@ -61,39 +68,39 @@ export default {
     };
   },
   methods: {
-    disposit(credit) {
-      console.log(credit);
-
-      credit = parseInt(this.$store?.state?.credit) + parseInt(credit);
-
+    updateCredit(credit) {
       const data = {
-        username: this.$store?.state?.credit,
+        username: this.$store?.state?.username,
         token: localStorage.getItem("token"),
         credit: credit,
       };
 
-      console.log(data);
-
-      /* axios
+      axios
         .post("http://localhost:3000/updateCredit", data)
         .then((res) => {
-          console.log("login successful:", res.data);
+          console.log("update successful:", res.data);
 
-          const data = {
-            userData: res.data.data,
-            username: this.formData.username,
-            password: this.formData.password,
-          };
-
-          this.$store.dispatch("saveLogin", data);
-
-          this.$router.push("/main");
+          this.$store.dispatch("updateCredit", data);
         })
         .catch((error) => {
-          console.error("Registration failed:", error);
-        }); */
+          console.error("update failed:", error);
+        });
     },
-    withdraw() {},
+    disposit(credit) {
+      credit = parseInt(this.$store?.state?.credit) + parseInt(credit);
+
+      this.updateCredit(credit);
+
+      this.dialogDisposit = false;
+    },
+    withdraw(credit) {
+      credit = parseInt(this.$store?.state?.credit) - parseInt(credit);
+
+      if (parseInt(credit) < 0) alert("You credit's not enough.");
+      else this.updateCredit(credit);
+
+      this.dialogWithdraw = false;
+    },
     toLogin() {
       localStorage.clear();
 
