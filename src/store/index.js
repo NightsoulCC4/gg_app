@@ -25,12 +25,15 @@ export default createStore({
             state.address_2 = data?.userData?.user_info[0]?.address_2
             state.bank_no = data?.userData?.bank_account[0]?.bank_no
             state.bank_type = data?.userData?.bank_name[0]?.description
+            state.credit = data?.userData?.user[0]?.credit
         }
     },
     actions: {
         saveLogin(context, data) {
 
-            console.log(data)
+            // console.log(data)
+
+            localStorage.setItem("token", data?.userData?.token)
 
             context.commit('login', data)
         }
