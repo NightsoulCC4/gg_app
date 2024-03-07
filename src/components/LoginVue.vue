@@ -31,8 +31,11 @@ export default {
     login() {
       console.log("Login:", this.formData);
 
+      const url = "http://172.105.121.61:3002";
+      // const url = "http://localhost:3000";
+
       axios
-        .post("http://172.105.121.61:3002/login", this.formData)
+        .post(url + "/login", this.formData)
         .then((res) => {
           console.log("login successful:", res.data);
 
@@ -42,9 +45,10 @@ export default {
             password: this.formData.password,
           };
 
-          this.$store.dispatch("saveLogin", data);
-
-          this.$router.push("/main");
+          if (res.data.status === "success") {
+            this.$store.dispatch("saveLogin", data);
+            this.$router.push("/main");
+          } else alert("Username or password incorrect.");
         })
         .catch((error) => {
           console.error("Registration failed:", error);
