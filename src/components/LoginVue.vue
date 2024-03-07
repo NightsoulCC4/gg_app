@@ -32,7 +32,7 @@ export default {
       console.log("Login:", this.formData);
 
       axios
-        .post("http://localhost:3000/login", this.formData)
+        .post("http://172.105.121.61:3002/login", this.formData)
         .then((res) => {
           console.log("login successful:", res.data);
 

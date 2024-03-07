@@ -76,7 +76,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:3000/updateCredit", data)
+        .post("http://172.105.121.61:3002/updateCredit", data)
         .then((res) => {
           console.log("update successful:", res.data);
 

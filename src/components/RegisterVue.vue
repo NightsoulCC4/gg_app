@@ -99,7 +99,7 @@ export default {
       // console.log("Registration Data:", this.formData);
 
       axios
-        .post("http://localhost:3000/register", this.formData)
+        .post("http://172.105.121.61:3002/register", this.formData)
         .then((res) => {
           console.log("Registration successful:", res.data);
         })
